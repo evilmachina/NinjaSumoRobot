@@ -11,6 +11,8 @@ namespace Sumo.Hardware
         private readonly OutputPort motorTwoDirection;
         private readonly PWM motorOneSpeed;
         private readonly PWM motorTwoSpeed;
+        private readonly bool leftForward = true;
+        private readonly bool rightFovard = false;
 
         public Wheels(Cpu.Pin motorOneDirectionPin, Cpu.Pin motorOneSpeedPin,
                       Cpu.Pin motorTwoDirectionPin, Cpu.Pin motorTwoSpeedPin)
@@ -24,8 +26,8 @@ namespace Sumo.Hardware
 
         public void Forward()
         {
-            this.motorOneDirection.Write(true);
-            this.motorTwoDirection.Write(true);
+            this.motorOneDirection.Write(leftForward);
+            this.motorTwoDirection.Write(rightFovard);
             
             this.motorOneSpeed.SetPulse(10000, 10000);
             this.motorTwoSpeed.SetPulse(10000, 10000);
@@ -35,8 +37,8 @@ namespace Sumo.Hardware
 
         public void Reverse()
         {
-            this.motorOneDirection.Write(false);
-            this.motorTwoDirection.Write(false);
+            this.motorOneDirection.Write(!leftForward);
+            this.motorTwoDirection.Write(!rightFovard);
 
             this.motorOneSpeed.SetPulse(10000, 10000);
             this.motorTwoSpeed.SetPulse(10000, 10000);
@@ -44,12 +46,20 @@ namespace Sumo.Hardware
 
         public void TurnLeft()
         {
-            throw new NotImplementedException();
+            this.motorOneDirection.Write(!leftForward);
+            this.motorTwoDirection.Write(rightFovard);
+
+            this.motorOneSpeed.SetPulse(10000, 10000);
+            this.motorTwoSpeed.SetPulse(10000, 10000);
         }
 
         public void TurnRight()
         {
-            throw new NotImplementedException();
+            this.motorOneDirection.Write(leftForward);
+            this.motorTwoDirection.Write(!rightFovard);
+
+            this.motorOneSpeed.SetPulse(10000, 10000);
+            this.motorTwoSpeed.SetPulse(10000, 10000); 
         }
 
         public void SpinLeft()
@@ -64,8 +74,8 @@ namespace Sumo.Hardware
 
         public void Stop()
         {
-            this.motorOneDirection.Write(false);
-            this.motorTwoDirection.Write(false);
+            this.motorOneDirection.Write(!leftForward);
+            this.motorTwoDirection.Write(!rightFovard);
 
             this.motorOneSpeed.SetPulse(10000,0);
             this.motorTwoSpeed.SetPulse(10000, 0);

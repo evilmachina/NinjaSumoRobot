@@ -21,9 +21,11 @@ namespace Sumo.Hardware
 
         public float GetDistance()
         {
-            var value = port.Read();
-            Debug.Print(value.ToString());
-            return C / (value + (float).001) - (C / X0) + Y0;
+            int val = port.Read();
+            double voltage = val * 3.3 / 1024;
+            Debug.Print(voltage.ToString());
+            Debug.Print(((2914 / (val + 5)) - 1).ToString());
+            return (2914 / (val + 5)) - 1;
         }
 
 

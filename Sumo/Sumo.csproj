@@ -30,6 +30,7 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="Brain.cs" />
     <Compile Include="Hardware\DistansDetector.cs" />
     <Compile Include="Hardware\LineSensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
