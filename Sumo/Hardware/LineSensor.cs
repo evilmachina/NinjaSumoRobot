@@ -1,5 +1,7 @@
 using System.Threading;
+using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using SecretLabs.NETMF.Hardware;
 
 namespace Sumo.Hardware
 {
@@ -7,26 +9,20 @@ namespace Sumo.Hardware
 
     public class LineSensor
     {
-        // improve using timer & delegates
+        private readonly AnalogInput port;
 
-        private readonly TristatePort port;
-
-        public LineSensor(Cpu.Pin digitalPin)
+        public LineSensor(Cpu.Pin analogPin)
         {
-            this.port = new TristatePort(digitalPin, true, false, Port.ResistorMode.Disabled);
+            this.port = new AnalogInput(analogPin);
         }
 
-        public bool GetValue()
+        private int value;
+        public int GetValue()
         {
-            this.port.Active = true; // output
-            this.port.Write(true);
-            Thread.Sleep(1); // should be 10 micro seconds
-            this.port.Active = false;
-
-            var start = Utility.GetMachineTime().Seconds;
-            while (this.port.Read() && ((Utility.GetMachineTime().Seconds - start) < 3)) ;
-            var diff = Utility.GetMachineTime().Seconds - start;
-            return diff >= 3;
+            value = this.port.Read();
+            Debug.Print("linesensor value: ");
+            Debug.Print(value.ToString());
+            return value;
         }
     }
 }
