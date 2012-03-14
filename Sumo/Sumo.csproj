@@ -33,6 +33,7 @@
     <Compile Include="Brain.cs" />
     <Compile Include="Hardware\DistansDetector.cs" />
     <Compile Include="Hardware\LineSensor.cs" />
+    <Compile Include="Hardware\Whisker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Hardware\Wheels.cs" />
